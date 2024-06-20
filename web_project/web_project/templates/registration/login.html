@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %} Вхід {% endblock %}
+{% block content %}
+
+
+<div id="login">
+    <div class="container custom-mt-15">
+        <div id="login-row" class="row justify-content-center align-items-center">
+            <div id="login-column" class="col-md-6 bg custom-bg-color">
+                <div id="login-box" class="col-md-12">
+                    <form id="login-form" class="form" method="post">
+                        {% csrf_token %}
+                        <h3 class="text-center text-light">Вход</h3>
+                        <div class="form-group">
+                            <label for="id_email" class="text-info text-light">Почта:</label><br>
+                            <input type="text" name="email" id="id_email" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="id_password" class="text-info text-light">Пароль:</label><br>
+                            <input type="password" name="password" id="id_password" class="form-control">
+                        </div>
+                        <a href="{% url "register" %}" class="navbar-nav ml-auto">Реєстрація</a><br>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-info btn-md text-light" value="Увійти">
+                        </div>
+                        <br>
+                        <div class="small text-center">
+                            <a href="{% url "password_reset" %}" class="text-center"><i>Забули пароль?</i></a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
