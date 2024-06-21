@@ -1,6 +1,7 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from cloudinary.models import CloudinaryField
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -23,7 +24,7 @@ class CustomUserManager(BaseUserManager):
 
         return self.create_user(email, password, **extra_fields)
 
-class CustomUser(AbstractBaseUser):
+class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True)
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
     last_name = models.CharField(_('last name'), max_length=30, blank=True)
@@ -39,3 +40,49 @@ class CustomUser(AbstractBaseUser):
 
     def __str__(self):
         return self.email
+
+class Contact(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='contacts')
+    name = models.CharField(_('name'), max_length=100)
+    email = models.EmailField(_('email address'), blank=True, null=True)
+    phone = models.CharField(_('phone number'), max_length=15, blank=True, null=True)
+    address = models.TextField(_('address'), blank=True, null=True)
+    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
+    updated_at = models.DateTimeField(_('updated at'), auto_now=True)
+
+    def __str__(self):
+        return f'{self.name} ({self.user.email})'
+
+class Tag(models.Model):
+    name = models.CharField(_('name'), max_length=50, unique=True)
+    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
+    updated_at = models.DateTimeField(_('updated at'), auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+class Note(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='notes')
+    title = models.CharField(_('title'), max_length=200)
+    content = models.TextField(_('content'))
+    tags = models.ManyToManyField(Tag, related_name='notes', blank=True)
+    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
+    updated_at = models.DateTimeField(_('updated at'), auto_now=True)
+
+    def __str__(self):
+        return f'{self.title} ({self.user.email})'
+
+    def add_tags(self, tag_names):
+        tags = [Tag.objects.get_or_create(name=name)[0] for name in tag_names]
+        self.tags.set(tags)
+
+
+class File(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='files')
+    name = models.CharField(_('file name'), max_length=255)
+    file = CloudinaryField(_('file'))
+    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
+    updated_at = models.DateTimeField(_('updated at'), auto_now=True)
+
+    def __str__(self):
+        return f'{self.name} ({self.user.email})'
