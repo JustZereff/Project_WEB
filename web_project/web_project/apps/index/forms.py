@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import PasswordChangeForm, UserCreationForm
+
 from .models import CustomUser
+
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
@@ -39,3 +41,4 @@ class CustomPasswordChangeForm(PasswordChangeForm):
         widget=forms.PasswordInput(attrs={'class': 'form-control'}),
         label='Підтвердіть новий пароль'
     )
+

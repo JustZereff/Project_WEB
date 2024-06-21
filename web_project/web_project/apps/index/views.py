@@ -55,13 +55,13 @@ def user_settings(request):
         if 'update_profile' in request.POST:
             if user_form.is_valid():
                 user_form.save()
-                messages.success(request, 'Ваш профиль был успешно обновлен!')
+                messages.success(request, 'Ваш профіль успішно оновлено!')
                 return redirect('user_settings')
         elif 'change_password' in request.POST:
             if password_form.is_valid():
                 user = password_form.save()
                 update_session_auth_hash(request, user)
-                messages.success(request, 'Ваш пароль был успешно изменен!')
+                messages.success(request, 'Ваш пароль успішно змінено!')
                 return redirect('user_settings')
     else:
         user_form = UserEditForm(instance=request.user)
