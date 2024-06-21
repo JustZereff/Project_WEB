@@ -1,11 +1,15 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
-from django.views.generic.base import View
 from django.urls import reverse, reverse_lazy
+from django.views.generic.base import View
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.views import PasswordResetView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from .forms import CustomUserCreationForm, CustomAuthenticationForm
+
+from .forms import CustomUserCreationForm, CustomAuthenticationForm, UserEditForm, CustomPasswordChangeForm
+
 
 def index(request):
     return render(request, 'index/index.html')
@@ -41,6 +45,32 @@ class CustomLogoutView(View):
     def dispatch(self, request, *args, **kwargs):
         logout(request)
         return HttpResponseRedirect(reverse('index'))
+    
+@login_required
+def user_settings(request):
+    if request.method == 'POST':
+        user_form = UserEditForm(request.POST, instance=request.user)
+        password_form = CustomPasswordChangeForm(request.user, request.POST)
+        
+        if 'update_profile' in request.POST:
+            if user_form.is_valid():
+                user_form.save()
+                messages.success(request, 'Ваш профиль был успешно обновлен!')
+                return redirect('user_settings')
+        elif 'change_password' in request.POST:
+            if password_form.is_valid():
+                user = password_form.save()
+                update_session_auth_hash(request, user)
+                messages.success(request, 'Ваш пароль был успешно изменен!')
+                return redirect('user_settings')
+    else:
+        user_form = UserEditForm(instance=request.user)
+        password_form = CustomPasswordChangeForm(request.user)
+
+    return render(request, 'user/user_settings.html', {
+        'user_form': user_form,
+        'password_form': password_form
+    })
 
 class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
     template_name = 'user/password_reset.html'
