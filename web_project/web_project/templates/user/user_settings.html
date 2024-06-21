@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load custom_filters %}
+
+{% block title %}
+    Профіль
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <br>
+    <h2>Налаштування профілю</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ user_form.non_field_errors|striptags }}
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ user_form.first_name.id_for_label }}">{{ user_form.first_name.label }}</label>
+                    {{ user_form.first_name|add_class:"form-control" }}
+                    {% if user_form.first_name.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ user_form.first_name.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ user_form.last_name.id_for_label }}">{{ user_form.last_name.label }}</label>
+                    {{ user_form.last_name|add_class:"form-control" }}
+                    {% if user_form.last_name.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ user_form.last_name.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ user_form.email.id_for_label }}">{{ user_form.email.label }}</label>
+                    {{ user_form.email|add_class:"form-control" }}
+                    {% if user_form.email.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ user_form.email.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ user_form.birth_date.id_for_label }}">{{ user_form.birth_date.label }}</label>
+                    {{ user_form.birth_date|add_class:"form-control" }}
+                    {% if user_form.birth_date.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ user_form.birth_date.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <button type="submit" name="update_profile" class="btn btn-primary">Оновити профіль</button>
+    </form>
+
+    <h2 class="mt-5">Зміна паролю</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ password_form.non_field_errors|striptags }}
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ password_form.old_password.id_for_label }}">{{ password_form.old_password.label }}</label>
+                    {{ password_form.old_password|add_class:"form-control" }}
+                    {% if password_form.old_password.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ password_form.old_password.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ password_form.new_password1.id_for_label }}">{{ password_form.new_password1.label }}</label>
+                    {{ password_form.new_password1|add_class:"form-control" }}
+                    {% if password_form.new_password1.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ password_form.new_password1.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ password_form.new_password2.id_for_label }}">{{ password_form.new_password2.label }}</label>
+                    {{ password_form.new_password2|add_class:"form-control" }}
+                    {% if password_form.new_password2.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ password_form.new_password2.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <button type="submit" name="change_password" class="btn btn-primary">Змінити пароль</button>
+    </form>
+</div>
+{% endblock %}

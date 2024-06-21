@@ -1,0 +1,48 @@
+body {
+    background-image: url('/static/images/bg.jpg');
+    background-size: cover; /* чтобы изображение заполняло всю область */
+    /* background-repeat: no-repeat; /*чтобы изображение не повторялось */
+}
+
+.navbar {
+    background-color: rgba(66, 66, 66, 0.2) !important;
+}
+
+.navbar-nav .nav-link {
+    transition: text-decoration 0.3s ease, font-size 0.3s ease; /* Добавляем плавный эффект */
+    color: #cacaca;
+}
+
+.navbar-nav .nav-link:hover {
+    text-decoration: underline;
+    font-size: 1.1em; 
+    color: #e7e7e7;
+}
+
+.custom-mt-15 {
+    margin-top: 15rem; /* или любое другое значение в пикселях, em, или rem */
+}
+
+.custom-mt-10 {
+    margin-top: 10rem; /* или любое другое значение в пикселях, em, или rem */
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.logo {
+    animation: pulse 3s infinite alternate;
+}
+
+.start_game {
+    box-shadow: #e7e7e7;
+}
+
+.custom-bg-color {
+    background-color: rgba(0, 0, 0, 0.5) !important; /* задаем цвет фона с прозрачностью */
+    border-radius: 10px !important; /* задаем радиус закругления углов */
+    padding: 20px !important; /* добавляем немного отступа для визуального разделения элементов */
+}
