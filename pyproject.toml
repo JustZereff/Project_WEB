@@ -12,6 +12,8 @@ django = "^5.0.6"
 environ = "^1.0"
 django-environ = "^0.11.2"
 psycopg2 = "^2.9.9"
+cloudinary = "^1.40.0"
+django-cloudinary-storage = "^0.3.0"
 
 
 [build-system]
