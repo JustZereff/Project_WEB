@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>{% if form.instance.pk %}Редактировать контакт{% else %}Создать контакт{% endif %}</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Сохранить</button>
+  </form>
+  <a href="{% url 'contacts_list' %}">Назад к списку контактов</a>
+{% endblock %}

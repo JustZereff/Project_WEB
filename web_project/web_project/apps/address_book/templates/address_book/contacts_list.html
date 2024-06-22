@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Мои контакты</h2>
+  <a href="{% url 'create_contact' %}">Добавить контакт</a>
+  <ul>
+    {% for contact in contacts %}
+      <li>
+        {{ contact.name }} - {{ contact.email }} - {{ contact.phone }}
+        <a href="{% url 'edit_contact' contact.id %}">Редактировать</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
