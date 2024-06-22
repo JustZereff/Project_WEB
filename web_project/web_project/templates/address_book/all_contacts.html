@@ -1,3 +1,5 @@
+<!-- address_book/templates/address_book/all_contacts.html -->
+
 {% extends "base.html" %} 
 
 {% load static %}
@@ -7,5 +9,15 @@
 {% endblock %}
 
 {% block content %}
-
+    <h1 class="mt-5">Список контактів</h1>
+    <ul>
+        {% for contact in contacts %}
+            <li>{{ contact.name }} - {{ contact.email }}
+                <a href="{% url 'view_contact' contact.pk %}" class="btn btn-primary">Show Details</a>
+                <a href="{% url 'update_contact' contact.pk %}" class="btn btn-warning">Edit</a>
+                <a href="{% url 'delete_contact' contact.pk %}" class="btn btn-danger">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'create_contact' %}" class="btn btn-success">Add New Contact</a>
 {% endblock %}
