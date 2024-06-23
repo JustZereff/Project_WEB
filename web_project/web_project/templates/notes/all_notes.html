@@ -8,4 +8,37 @@
 
 {% block content %}
 
+    <div class="row">
+        <div class="col-md-8">
+            {% for note in notes_on_page %}
+            <div class="note" itemscope itemtype="http://schema.org/CreativeWork">
+                <a class="title" href="note/{{note.id}}">{{note.title}} </a>
+                <span class="text"> {{note.context}} </span>
+                <div class="tags">
+                    Теги:
+                    <meta class="keywords" itemprop="keywords" content="change,deep-thoughts,thinking,world" /> 
+                    {% for tag in note.tags.all %}
+                    <a class="tag" href="tag/{{tag}}">{{tag}}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="pagination">
+        <span class="step-links">
+            {% if notes_on_page.has_previous %}
+                <a href="?page={{ notes_on_page.previous_page_number }}">Previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ notes_on_page.number }} of {{ notes_on_page.paginator.num_pages }}.
+            </span>
+
+            {% if notes_on_page.has_next %}
+                <a href="?page={{ notes_on_page.next_page_number }}">Next</a>
+            {% endif %}
+        </span>
+    </div>
+    
 {% endblock %}

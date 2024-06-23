@@ -1,0 +1,22 @@
+{% extends "base.html" %} 
+
+{% load static %}
+
+{% block content %}
+
+<div class="note">
+    <h3 class="note-title">{{note.title}}</h3>
+    <p><strong>Текст:</strong>
+        <span class="note-context">{{note.context}}</span>
+    </p>
+    <div class="note-tags"> Теги:
+        <meta class="keywords" itemprop="keywords" content="change,deep-thoughts,thinking,world" /> 
+        {% for tag in note.tags.all %}
+        <a class="tag" href="/notes/tag/{{tag}}">{{tag}}</a>
+        {% endfor %}         
+    </div>
+    <a class="button" href="/notes/note/edit/{{note.id}}">Редагувати</a>
+    <a class="button" href="/notes/note/delete/{{note.id}}">Видалити</a>
+</div>
+    
+{% endblock %}
