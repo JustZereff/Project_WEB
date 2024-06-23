@@ -1,0 +1,16 @@
+<!-- address_book/templates/address_book/contact_confirm_delete.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Confirm Deletion{% endblock %}
+
+{% block content %}
+    <h1>Confirm Deletion</h1>
+    <p>Are you sure you want to delete "{{ contact.name }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-danger" value="Delete">
+        <a href="{% url 'index_address_book' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+{% endblock %}
