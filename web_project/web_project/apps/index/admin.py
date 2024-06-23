@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CustomUser, Contact, Note, Tag, File
+from .models import CustomUser, Contact, Note, Tag
 
 @admin.register(CustomUser)
 class CustomUserAdmin(admin.ModelAdmin):
@@ -22,7 +22,7 @@ class TagAdmin(admin.ModelAdmin):
     list_display = ('name', 'created_at')
     search_fields = ('name',)
 
-@admin.register(File)
-class FileAdmin(admin.ModelAdmin):
-    list_display = ('name', 'user', 'created_at')
-    search_fields = ('name', 'user__email')
+# @admin.register(File)
+# class FileAdmin(admin.ModelAdmin):
+#     list_display = ('name', 'user', 'created_at')
+#     search_fields = ('name', 'user__email')
