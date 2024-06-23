@@ -7,13 +7,10 @@ from index.models import Contact
 
 @login_required
 def index_address_book(request):
-    contacts = Contact.objects.filter(user=request.user)
-
-    # Пагинация: Определение количества контактов на странице
+    contacts = Contact.objects.filter(user=request.user).order_by('id')  # Добавлено упорядочение
     paginator = Paginator(contacts, 15)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-
     form = ContactForm()
     return render(request, 'address_book/index.html', {'form': form, 'page_obj': page_obj})
 
@@ -44,21 +41,15 @@ def edit_contact(request, contact_id):
 
 @login_required
 def contact_list(request):
-    contacts = Contact.objects.filter(user=request.user)
-
-    # Пагинация: Определение количества контактов на странице
+    contacts = Contact.objects.filter(user=request.user).order_by('id')  # Добавлено упорядочение
     paginator = Paginator(contacts, 15)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-
     return render(request, 'address_book/all_contacts.html', {'page_obj': page_obj})
 
 @login_required
 def contact_detail(request, contact_id):
-    print(request)
-    print(contact_id)
     contact = get_object_or_404(Contact, pk=contact_id, user=request.user)
-    print(contact)
     data = {
         'id': contact.id,
         'name': contact.name,
@@ -67,5 +58,4 @@ def contact_detail(request, contact_id):
         'address': contact.address,
         'birth_date': contact.birth_date.strftime('%Y-%m-%d') if contact.birth_date else None,
     }
-    print(data)
     return JsonResponse(data)

@@ -9,12 +9,10 @@
     <div class="container mt-5">
         <h1>Адресна книга</h1>
 
-        <!-- Кнопка "Створити контакт" справа -->
         <div class="text-end mb-3">
             <a href="{% url 'address_book:create_contact' %}" class="btn btn-primary">Створити контакт</a>
         </div>
 
-        <!-- Список контактов -->
         <ul class="list-group">
             {% for contact in page_obj %}
                 <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -27,7 +25,6 @@
             {% endfor %}
         </ul>
 
-        <!-- Пагинация -->
         <nav aria-label="Страницы">
             <ul class="pagination justify-content-center mt-4">
                 {% if page_obj.has_previous %}
@@ -55,7 +52,6 @@
         </nav>
     </div>
 
-    <!-- Модальное окно для подробной информации о контакте -->
     <div class="modal fade" id="contactDetailsModal" tabindex="-1" aria-labelledby="contactDetailsModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -105,7 +101,8 @@
                             contactPhone.textContent = data.phone ? data.phone : '-';
                             contactAddress.textContent = data.address ? data.address : '-';
                             contactBirthDate.textContent = data.birth_date ? data.birth_date : '-';
-                            $('#contactDetailsModal').modal('show');
+                            const contactDetailsModal = new bootstrap.Modal(document.getElementById('contactDetailsModal'));
+                            contactDetailsModal.show();
                         })
                         .catch(error => console.error('Error:', error));
                 });

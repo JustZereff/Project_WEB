@@ -7,6 +7,6 @@ urlpatterns = [
     path('', views.index_address_book, name='index_address_book'),
     path('create/', views.create_contact, name='create_contact'),
     path('<int:contact_id>/edit/', views.edit_contact, name='edit_contact'),
-    path('<int:contact_id>/', views.contact_detail, name='contact_detail'),  # Добавлено
+    path('<int:contact_id>/', views.contact_detail, name='contact_detail'),
     path('list/', views.contact_list, name='contact_list'),
 ]
