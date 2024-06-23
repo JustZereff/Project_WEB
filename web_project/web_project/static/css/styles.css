@@ -46,3 +46,66 @@ body {
     border-radius: 10px !important; /* задаем радиус закругления углов */
     padding: 20px !important; /* добавляем немного отступа для визуального разделения элементов */
 }
+
+.btn-secondary {
+    background-color: rgba(108, 117, 125, 0.8) !important; /* Змінюємо колір кнопки */
+    color: #fff;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background-color: rgba(108, 117, 125, 1) !important; /* Змінюємо колір кнопки при наведенні */
+    color: #ddd;
+    transform: scale(1.05); /* Додаємо ефект збільшення */
+}
+
+.form-container {
+    background-color: rgba(255, 255, 255, 0.8); /* Додаємо невелику прозорість */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Додаємо тінь навколо форми */
+    max-width: 500px;
+    margin: auto;
+    margin-top: 100px; /* Збільшуємо верхній відступ */
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.custom-file-input {
+    cursor: pointer;
+}
+
+.custom-select {
+    cursor: pointer;
+}
+
+.form-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.btn-custom {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+}
+
+.btn-custom:hover {
+    background-color: #0056b3;
+}
+
+/* Покращення для мобільних пристроїв */
+@media (max-width: 600px) {
+    .form-container {
+        margin-top: 20px;
+        padding: 10px;
+    }
+}
