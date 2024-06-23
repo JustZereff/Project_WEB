@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Редагування контакту{% endblock %}
+
+{% block content %}
+  <div class="container mt-5">
+    <br><br> <!-- Сдвиг надписи вниз на 2 строки -->
+    <h2>Редагування контакту "{{ contact.name }}"</h2>
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        <label class="text-warning" for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+        {{ form.name }}
+      </div>
+      <div class="form-group">
+        <label class="text-warning" for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+        {{ form.email }}
+      </div>
+      <div class="form-group">
+        <label class="text-warning" for="{{ form.phone.id_for_label }}">{{ form.phone.label }}</label>
+        {{ form.phone }}
+      </div>
+      <div class="form-group">
+        <label class="text-warning" for="{{ form.address.id_for_label }}">{{ form.address.label }}</label>
+        {{ form.address }}
+      </div>
+      <div class="form-group">
+        <label class="text-warning" for="{{ form.birth_date.id_for_label }}">{{ form.birth_date.label }}</label>
+        {{ form.birth_date }}
+      </div>
+      <button type="submit" class="btn btn-success">Зберегти</button> <!-- Зеленая кнопка -->
+    </form>
+  </div>
+{% endblock %}

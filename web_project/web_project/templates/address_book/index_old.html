@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Адресна книга
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1>Адресна книга</h1>
+
+        <!-- Форма для создания нового контакта -->
+        <form method="post" action="{% url 'address_book:create_contact' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Зберегти</button>
+        </form>
+
+        <hr>
+
+        <!-- Список всех контактов пользователя -->
+        <h2>Ваші контакти:</h2>
+        <ul>
+            {% for contact in contacts %}
+                <li>{{ contact.name }} - {{ contact.email }} 
+                    (<a href="{% url 'address_book:edit_contact' contact.id %}">редагувати</a>)
+                </li>
+            {% empty %}
+                <li>Немає контактів</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

@@ -1,0 +1,12 @@
+<!-- web_project/templates/address_book/create_contact.html -->
+{% extends 'base.html' %}
+{% block title %}Створення контакту{% endblock %}
+
+{% block content %}
+  <h2>Створення нового контакту</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Зберегти</button>
+  </form>
+{% endblock %}
