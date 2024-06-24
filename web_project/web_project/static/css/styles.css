@@ -47,6 +47,33 @@ body {
     padding: 20px !important; /* добавляем немного отступа для визуального разделения элементов */
 }
 
+<<<<<<< artem
+.custom-list-group-item {
+    background-color: rgba(66, 66, 66, 0.3); /* Серый цвет с прозрачностью */
+    border: none; /* Удаление рамки */
+    margin-bottom: 10px; /* Отступ между блоками */
+    transition: background-color 0.3s; /* Плавный переход цвета */
+    border-radius: 5px; /* Закругленные углы */
+}
+
+.custom-list-group-item:hover {
+    background-color: rgba(66, 66, 66, 0.5); /* Немного темнее при наведении */
+}
+
+.custom-list-group-item a {
+    color: rgba(255, 255, 255, 0.7); /* Цвет ссылки */
+    text-decoration: none; /* Удаление подчеркивания */
+}
+
+.custom-list-group-item a:hover {
+    text-decoration: underline; /* Подчеркивание при наведении */
+}
+
+.custom-list-group-item small,
+.custom-list-group-item .badge {
+    color: rgba(255, 255, 255, 0.6); /* Цвет времени и тегов */
+}
+=======
 .btn-secondary {
     background-color: rgba(108, 117, 125, 0.8) !important; /* Змінюємо колір кнопки */
     color: #fff;
@@ -152,3 +179,4 @@ body {
     background-color: rgb(4, 77, 18);
     color: white;
 }
+>>>>>>> main
