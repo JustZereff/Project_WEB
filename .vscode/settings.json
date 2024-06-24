@@ -1,7 +1,0 @@
-{
-    "python.analysis.extraPaths": [
-        "./web_project/web_project",
-        "./web_project",
-        "./web_project/web_project/apps"
-    ]
-}
