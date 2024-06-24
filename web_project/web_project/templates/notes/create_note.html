@@ -7,32 +7,34 @@
 {% endblock %}
 
 {% block content %}
-<form method="POST" action="{% url 'create_note' %}">
-    {% csrf_token %}
-    {{form.as_p}}
-    <div style="padding: 10px">
-        <label>Назва нотатки:
-            {{form.title}}
-        </label>
-        <span>{{form.errors.title}}</span>
-    </div>
-    <div style="padding: 10px">
-        <label>Текст нотатки:
-            {{form.context}}
-        </label>
-        <span>{{form.errors.context}}</span>
-    </div>
-    <div style="padding: 10px">
-        <label>Теги:
-            {{form.tags}}
-        </label>
-        <span>{{form.errors.tags}}</span>
-    </div>
-    <a href="{% url 'create_tag' %}">Додати новий тег</a>
-    <div class="grid">
-        <button type="submit">Зверегти</button>
-        <button type="reset" class="secondary">Скасувати</button>
-    </div>
-</form>
+<div class="container form-container">
+    <form method="POST" action="{% url 'create_note' %}">
+        {% csrf_token %}
+        <div style="padding: 10px">
+            <label for="{{ form.title.id_for_label }}">Назва нотатки:</label>
+            {{ form.title }}
+            <span>{{ form.title.errors }}</span>
+        </div>
+        <div style="padding: 10px">
+            <label for="{{ form.content.id_for_label }}">Текст нотатки:</label>
+            {{ form.content }}
+            <span>{{ form.content.errors }}</span>
+        </div>
+        <div style="padding: 10px">
+            <label for="{{ form.tags.id_for_label }}">Теги:</label>
+            {{ form.tags }}
+            <span>{{ form.tags.errors }}</span>
+        </div>
+        <a href="{% url 'create_tag' %}" class="btn btn-secondary mb-3">Додати новий тег</a>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Зберегти</button>
+            <button type="button" class="btn btn-secondary" onclick="window.history.back()">Скасувати</button>
+        </div>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 {% endblock %}

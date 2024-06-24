@@ -38,7 +38,7 @@ def create_note(request):
         else:
             return render(request, 'notes/create_note', {'form': form})
 
-    return render(request, 'notes/create_note', {'form': NoteForm()})
+    return render(request, 'notes/create_note.html', {'form': NoteForm()})
 
 @login_required
 def edit_note(request, note_id: int):

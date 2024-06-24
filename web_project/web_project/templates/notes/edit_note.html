@@ -7,32 +7,41 @@
 {% endblock %}
 
 {% block content %}
-<form method="POST" action="{% url 'edit_note' note_id=note.id %}">
-    {% csrf_token %}
-    {{form.as_p}}
-    <div style="padding: 10px">
-        <label>Назва нотатки:
-            {{form.title}}
-        </label>
-        <span>{{form.errors.title}}</span>
-    </div>
-    <div style="padding: 10px">
-        <label>Текст нотатки:
-            {{form.context}}
-        </label>
-        <span>{{form.errors.context}}</span>
-    </div>
-    <div style="padding: 10px">
-        <label>Теги:
-            {{form.tags}}
-        </label>
-        <span>{{form.errors.tags}}</span>
-    </div>
-    <a href="{% url 'create_tag' %}">Додати новий тег</a>
-    <div class="grid">
-        <button type="submit">Зверегти</button>
-        <button type="reset" class="secondary">Скасувати</button>
-    </div>
-</form>
+<div class="container form-section">
+    <h2 class="mb-4">Редагувати нотатку</h2>
+    <form method="POST" action="{% url 'edit_note' note_id=note.id %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_title">Назва нотатки:</label>
+            {{ form.title }}
+            {% if form.errors.title %}
+            <div class="text-danger">{{ form.errors.title }}</div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="id_content">Текст нотатки:</label>
+            {{ form.content }}
+            {% if form.errors.content %}
+            <div class="text-danger">{{ form.errors.content }}</div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="id_tags">Теги:</label>
+            {{ form.tags }}
+            {% if form.errors.tags %}
+            <div class="text-danger">{{ form.errors.tags }}</div>
+            {% endif %}
+        </div>
+        <a href="{% url 'create_tag' %}" class="btn btn-secondary mb-3">Додати новий тег</a>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Зберегти</button>
+            <button type="button" class="btn btn-secondary" onclick="window.history.back()">Скасувати</button>
+        </div>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 {% endblock %}
