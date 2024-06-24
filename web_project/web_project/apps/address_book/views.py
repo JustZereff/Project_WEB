@@ -4,6 +4,8 @@ from django.core.paginator import Paginator
 from django.http import JsonResponse
 from .forms import ContactForm
 from index.models import Contact
+from datetime import timedelta, datetime, date
+from django.db.models import Q
 
 @login_required
 def index_address_book(request):
@@ -59,3 +61,25 @@ def contact_detail(request, contact_id):
         'birth_date': contact.birth_date.strftime('%Y-%m-%d') if contact.birth_date else None,
     }
     return JsonResponse(data)
+
+@login_required
+def upcoming_birthdays(request):
+    today = date.today()
+    end_date = today + timedelta(days=10)
+    
+    # Фильтруем контакты, у которых день рождения в ближайшие 10 дней
+    contacts = Contact.objects.filter(
+        user=request.user, 
+        birth_date__isnull=False
+    ).filter(
+        Q(
+            Q(birth_date__month=today.month, birth_date__day__gte=today.day) |
+            Q(birth_date__month=end_date.month, birth_date__day__lte=end_date.day)
+        ) |
+        Q(
+            birth_date__month__gt=today.month, 
+            birth_date__month__lt=end_date.month
+        )
+    )
+    
+    return render(request, 'address_book/upcoming_birthdays.html', {'contacts': contacts})
