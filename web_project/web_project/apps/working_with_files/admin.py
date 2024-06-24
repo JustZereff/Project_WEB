@@ -1,3 +1,11 @@
 from django.contrib import admin
+from .models import File
 
-# Register your models here.
+@admin.register(File)
+class FileAdmin(admin.ModelAdmin):
+    list_display = ['name', 'user', 'category', 'uploaded_at']
+    search_fields = ['name', 'user__email']
+
+    def get_category(self, obj):
+        return obj.get_category_display()
+    get_category.short_description = 'Категорія'

@@ -1,7 +1,7 @@
-# web_project/apps/address_book/forms.py
 from django import forms
 from index.models import Contact
 from django.core.validators import EmailValidator
+
 
 class ContactForm(forms.ModelForm):
     class Meta:
