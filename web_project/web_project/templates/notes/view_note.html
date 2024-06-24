@@ -1,0 +1,32 @@
+{% extends "base.html" %} 
+
+{% load static %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h3 class="card-title">{{ note.title }}</h3>
+                    <p><strong>Текст:</strong>
+                        <span class="note-context">{{ note.content }}</span>
+                    </p>
+                    <div class="note-tags">
+                        <strong>Теги:</strong>
+                        {% for tag in note.tags.all %}
+                        <a class="badge bg-primary text-light" href="/notes/tag/{{ tag.id }}">{{ tag.name }}</a>
+                        {% endfor %}
+                    </div>
+                    <div class="mt-3">
+                        <a class="btn btn-warning" href="/notes/note/edit/{{ note.id }}">Редагувати</a>
+                        <a class="btn btn-danger" href="/notes/note/delete/{{ note.id }}">Видалити</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+{% endblock %}
