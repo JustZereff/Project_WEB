@@ -8,4 +8,55 @@
 
 {% block content %}
 
+<div class="container mt-4">
+    <div class="new-note-link">
+        <a href="create/" class="btn btn-success">Створити нову нотатку</a>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            {% for note in notes_on_page %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="note/{{note.id}}">{{note.title}}</a>
+                    </h5>
+                    <p class="card-text">{{note.content}}</p>
+                    <div class="tags">
+                        <strong>Теги:</strong>
+                        {% for tag in note.tags.all %}
+                        <a class="badge bg-primary text-light" href="tags/{{tag.name}}">{{ tag.name }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="pagination mt-4">
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                {% if notes_on_page.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ notes_on_page.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+
+                <li class="page-item disabled">
+                    <span class="page-link">Page {{ notes_on_page.number }} of {{ notes_on_page.paginator.num_pages }}</span>
+                </li>
+
+                {% if notes_on_page.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ notes_on_page.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</div>
+    
 {% endblock %}
