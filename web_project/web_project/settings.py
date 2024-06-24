@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'notes',
     'working_with_files',
     'cloudinary',
-    'cloudinary_storage',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

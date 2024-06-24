@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Адресна книга
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1>Адресна книга</h1>
+
+        <div class="text-end mb-3">
+            <a href="{% url 'address_book:create_contact' %}" class="btn btn-primary">Створити контакт</a>
+            <a href="{% url 'address_book:upcoming_birthdays' %}" class="btn btn-secondary">Ближайшие дни рождения</a>
+        </div>
+
+        <ul class="list-group">
+            {% for contact in page_obj %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a href="#" class="contact-details" data-contact-id="{{ contact.id }}">{{ contact.name }}</a>
+                    <span class="badge bg-secondary">{{ contact.phone }}</span>
+                    <a href="{% url 'address_book:edit_contact' contact.id %}" class="btn btn-sm btn-outline-secondary ms-2">Редагувати</a>
+                </li>
+            {% empty %}
+                <li class="list-group-item">Немає контактів</li>
+            {% endfor %}
+        </ul>
+
+        <nav aria-label="Страницы">
+            <ul class="pagination justify-content-center mt-4">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Попередня</a>
+                    </li>
+                {% endif %}
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <li class="page-item active" aria-current="page">
+                            <span class="page-link">{{ num }}</span>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Наступна</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+
+    <div class="modal fade" id="contactDetailsModal" tabindex="-1" aria-labelledby="contactDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="contactDetailsModalLabel">Деталі контакту</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрити"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Ім'я:</strong> <span id="contactName"></span></p>
+                    <p><strong>Email:</strong> <span id="contactEmail"></span></p>
+                    <p><strong>Телефон:</strong> <span id="contactPhone"></span></p>
+                    <p><strong>Адреса:</strong> <span id="contactAddress"></span></p>
+                    <p><strong>Дата народження:</strong> <span id="contactBirthDate"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const contactDetailsLinks = document.querySelectorAll('.contact-details');
+            const modalTitle = document.getElementById('contactDetailsModalLabel');
+            const contactName = document.getElementById('contactName');
+            const contactEmail = document.getElementById('contactEmail');
+            const contactPhone = document.getElementById('contactPhone');
+            const contactAddress = document.getElementById('contactAddress');
+            const contactBirthDate = document.getElementById('contactBirthDate');
+
+            contactDetailsLinks.forEach(link => {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const contactId = this.getAttribute('data-contact-id');
+                    fetch(`/address_book/${contactId}/`)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            modalTitle.textContent = `Деталі контакту "${data.name}"`;
+                            contactName.textContent = data.name;
+                            contactEmail.textContent = data.email ? data.email : '-';
+                            contactPhone.textContent = data.phone ? data.phone : '-';
+                            contactAddress.textContent = data.address ? data.address : '-';
+                            contactBirthDate.textContent = data.birth_date ? data.birth_date : '-';
+                            const contactDetailsModal = new bootstrap.Modal(document.getElementById('contactDetailsModal'));
+                            contactDetailsModal.show();
+                        })
+                        .catch(error => console.error('Error:', error));
+                });
+            });
+        });
+    </script>
+{% endblock %}
