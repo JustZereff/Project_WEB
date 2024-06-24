@@ -1,4 +1,4 @@
-{% extends "base.html" %} 
+{% extends "base.html" %}
 
 {% load static %}
 
@@ -7,5 +7,67 @@
 {% endblock %}
 
 {% block content %}
-
+<div class="container custom-mt-10">
+    <!-- Додати стилізацію для заголовка -->
+    <h2 class="custom-header">
+        <i class="fas fa-folder-open"></i> Файли
+    </h2>
+    <div class="d-flex justify-content-between custom-bg-color" role="group" aria-label="Basic example">
+        <div>
+            <a href="{% url 'index_files' %}?category=all&sort_order={{ sort_order }}" class="btn btn-secondary">Всі</a>
+            {% for code, name in categories %}
+            <a href="{% url 'index_files' %}?category={{ code }}&sort_order={{ sort_order }}" class="btn btn-secondary">{{ name }}</a>
+            {% endfor %}
+        </div>
+        <div>
+            <a href="{% url 'index_files' %}?category={{ category }}&sort_order=asc" class="btn btn-secondary">Старіші</a>
+            <a href="{% url 'index_files' %}?category={{ category }}&sort_order=desc" class="btn btn-secondary">Новіші</a>
+        </div>
+    </div>
+    <!-- Кнопка завантаження файлу -->
+    <a href="{% url 'file_upload' %}" class="btn btn-primary mt-2">Завантажити файл</a>
+    <ul class="list-group mt-3">
+    {% for file in files %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div class="file-info">
+                <span class="file-name">{{ file.name }}</span>
+                <span class="file-details">{{ file.get_category_display }} - {{ file.uploaded_at|date:"d M Y H:i" }}</span>
+            </div>
+            <div class="file-actions">
+                <a href="{{ file.file.url }}" target="_blank" class="btn btn-info btn-sm">Переглянути</a>
+                <a href="{% url 'file_delete' file.pk %}" class="btn btn-danger btn-sm ml-2">Видалити</a>
+            </div>
+        </li>
+    {% endfor %}
+    </ul>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center mt-3">
+            {% if files.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1&category={{ category }}&sort_order={{ sort_order }}" aria-label="Перша">
+                    <span aria-hidden="true">&laquo;&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ files.previous_page_number }}&category={{ category }}&sort_order={{ sort_order }}" aria-label="Попередня">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            {% endif %}
+            <li class="page-item disabled"><span class="page-link">Сторінка {{ files.number }} із {{ files.paginator.num_pages }}</span></li>
+            {% if files.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ files.next_page_number }}&category={{ category }}&sort_order={{ sort_order }}" aria-label="Наступна">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ files.paginator.num_pages }}&category={{ category }}&sort_order={{ sort_order }}" aria-label="Остання">
+                    <span aria-hidden="true">&raquo;&raquo;</span>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
 {% endblock %}

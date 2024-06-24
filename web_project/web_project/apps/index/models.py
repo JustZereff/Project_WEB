@@ -89,12 +89,12 @@ class Note(models.Model):
         self.tags.set(tags)
 
 
-class File(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='files')
-    name = models.CharField(_('file name'), max_length=255)
-    file = CloudinaryField(_('file'))
-    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
-    updated_at = models.DateTimeField(_('updated at'), auto_now=True)
+# class File(models.Model):
+#     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='files')
+#     name = models.CharField(_('file name'), max_length=255)
+#     file = CloudinaryField(_('file'))
+#     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
+#     updated_at = models.DateTimeField(_('updated at'), auto_now=True)
 
-    def __str__(self):
-        return f'{self.name} ({self.user.email})'
+#     def __str__(self):
+#         return f'{self.name} ({self.user.email})'
