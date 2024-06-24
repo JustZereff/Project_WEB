@@ -109,3 +109,46 @@ body {
         padding: 10px;
     }
 }
+
+.custom-header {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2c3e50;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.custom-header .fas {
+    font-size: 1.5rem;
+    color: #2980b9;
+}
+
+.file-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.file-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.file-name {
+    font-weight: bold;
+}
+
+.file-details {
+    color: #6c757d;
+}
+
+.btn-info {
+    background-color: rgb(6, 88, 91);
+    color: white;
+}
+
+.btn-info:hover {
+    background-color: rgb(4, 77, 18);
+    color: white;
+}

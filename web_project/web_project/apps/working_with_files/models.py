@@ -1,14 +1,18 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 import os
+
+User = get_user_model()
 
 class File(models.Model):
     CATEGORY_CHOICES = [
         ('image', 'Зображення'),
-        ('document', 'Документ'),
+        ('document', 'Документи'),
         ('video', 'Відео'),
         ('other', 'Інше'),
     ]
 
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='files')
     name = models.CharField(max_length=255, verbose_name="Назва")
     file = models.FileField(upload_to='uploads/', verbose_name="Файл")
     category = models.CharField(max_length=10, choices=CATEGORY_CHOICES, default='other', verbose_name="Категорія")
