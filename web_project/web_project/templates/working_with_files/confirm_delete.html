@@ -5,13 +5,20 @@
 {% endblock %}
 
 {% block content %}
-<div class="container custom-mt-10">
-    <h2>Видалити файл</h2>
-    <p>Ви впевнені, що хочете видалити файл <strong>{{ file.name }}</strong>?</p>
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Видалити</button>
-        <a href="{% url 'index_files' %}" class="btn btn-secondary">Скасувати</a>
-    </form>
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="container custom-mt-10">
+                <h2>Видалити файл</h2>
+                <p>Ви впевнені, що хочете видалити файл <strong>{{ file.name }}</strong>?</p>
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Видалити</button>
+                    <a href="{% url 'index_files' %}" class="btn btn-secondary">Скасувати</a>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

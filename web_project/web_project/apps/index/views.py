@@ -15,19 +15,19 @@ from .tasks import parse_and_save_news
 from .forms import CustomUserCreationForm, CustomAuthenticationForm, UserEditForm, CustomPasswordChangeForm
 
 def index(request):
-    parse_and_save_news()
-
-    # Определение пути для сохранения JSON файла
+    # parse_and_save_news()
+    
+        # Определение пути для сохранения JSON файла
     script_dir = os.path.dirname(__file__)
     logs_dir = os.path.join(script_dir, 'logs')
     json_path = os.path.join(logs_dir, 'news_data.json')
-    
+        
     # Загрузка данных из JSON файла
     with open(json_path, 'r', encoding='utf-8') as json_file:
         news = json.load(json_file)
 
     return render(request, 'index/index.html', {'news': news})
-
+        
 def login_view(request):
     if request.method == 'POST':
         form = CustomAuthenticationForm(request.POST)

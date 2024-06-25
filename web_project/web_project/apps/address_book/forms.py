@@ -6,7 +6,15 @@ from django.core.validators import EmailValidator
 class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
-        fields = ['name', 'email', 'phone', 'address', 'birth_date']
+        fields = ['first_name', 'last_name', 'email', 'phone', 'address', 'birth_date']
+        labels = {
+            'first_name': "Ім'я",
+            'last_name': 'Прізвище',
+            'email': 'Електронна пошта',
+            'phone': "Телефон",
+            'address': 'Адреса',
+            'birth_date': 'Дата народження'
+        }
 
     def clean_phone(self):
         phone = self.cleaned_data.get('phone')

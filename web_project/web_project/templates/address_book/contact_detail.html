@@ -2,12 +2,13 @@
 {% load static %}
 
 {% block title %}
-    Contact Details - {{ contact.name }}
+    Contact Details - {{ contact.first_name }}
 {% endblock %}
 
 {% block content %}
     <h1 class="mt-5">Contact Details</h1>
-    <p><strong>Name:</strong> {{ contact.name }}</p>
+    <p><strong>Ім'я:</strong> {{ contact.first_name }}</p>
+    <p><strong>Прізвище:</strong> {{ contact.last_name }}</p>
     <p><strong>Email:</strong> {{ contact.email }}</p>
     <p><strong>Phone:</strong> {{ contact.phone }}</p>
     <p><strong>Address:</strong> {{ contact.address }}</p>

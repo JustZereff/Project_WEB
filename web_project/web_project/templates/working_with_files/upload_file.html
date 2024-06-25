@@ -1,23 +1,30 @@
 {% extends "base.html" %}
 
-{% load static %}
+{% load form_tags %}
 
 {% block content %}
-<div class="container">
-    <div class="form-container">
-        <h2>Завантажити файл</h2>
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="id_name">Назва:</label>
-                {{ form.name }}
+<br><br>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h2 class="card-title">Завантажити файл</h2>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="id_name" class="form-label">Назва:</label>
+                            {{ form.name|add_class:"form-control" }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_file" class="form-label">Файл:</label>
+                            {{ form.file|add_class:"form-control" }}
+                        </div>
+                        <button type="submit" class="btn btn-primary">Завантажити</button>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="id_file">Файл:</label>
-                {{ form.file }}
-            </div>
-            <button type="submit" class="btn btn-custom">Завантажити</button>
-        </form>
+        </div>
     </div>
 </div>
 {% endblock %}

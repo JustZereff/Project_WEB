@@ -57,4 +57,3 @@ def parse_and_save_news():
     finally:
         driver.quit()
 
-parse_and_save_news()
