@@ -7,7 +7,7 @@
 
 {% block content %}
     <h1>Confirm Deletion</h1>
-    <p>Are you sure you want to delete "{{ contact.name }}"?</p>
+    <p>Are you sure you want to delete "{{ contact.first_name }}"?</p>
     <form method="post">
         {% csrf_token %}
         <input type="submit" class="btn btn-danger" value="Delete">

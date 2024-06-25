@@ -3,13 +3,12 @@
 {% load static %}
 
 {% block content %}
-
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-md-8">
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h3 class="card-title">{{ note.title }}</h3>
+<br><br>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6 bg-light p-4 rounded shadow-sm">
+                    <h3 class="card-title">Назва нотатки: {{ note.title }}</h3>
+                    <br>
                     <p><strong>Текст:</strong>
                         <span class="note-context">{{ note.content }}</span>
                     </p>
@@ -26,7 +25,5 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
     
 {% endblock %}

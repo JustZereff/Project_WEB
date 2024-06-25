@@ -5,6 +5,9 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from index.models import Tag, Note, CustomUser
 from .forms import NoteForm, TagForm
 
+import logging
+
+logger = logging.getLogger(__name__)
 
 @login_required
 def index_notes(request, page=1):
@@ -20,7 +23,9 @@ def create_tag(request):
         form = TagForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('notes/all_notes.html')
+            return redirect('index_notes')
+        else:
+            logger.error("Ошибка валидации формы: %s", form.errors)
     else:
         form = TagForm()
     return render(request, 'notes/create_tag.html', {'form': form})
@@ -32,13 +37,14 @@ def create_note(request):
         if form.is_valid():
             note = form.save(commit=False)
             note.user = request.user
-            note.tags = note.add_tags(form.tags)
             note.save()
-            return redirect(to='index_notes')
-        else:
-            return render(request, 'notes/create_note', {'form': form})
+            form.save_m2m()  # Сохранение ManyToMany связей
+            return redirect('index_notes')
+    else:
+        form = NoteForm()
+    
+    return render(request, 'notes/create_note.html', {'form': form})
 
-    return render(request, 'notes/create_note.html', {'form': NoteForm()})
 
 @login_required
 def edit_note(request, note_id: int):

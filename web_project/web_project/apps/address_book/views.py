@@ -25,7 +25,7 @@ def create_contact(request):
             contact = form.save(commit=False)
             contact.user = request.user
             contact.save()
-            return redirect('address_book:contact_list')
+            return redirect('address_book:index_address_book') 
     else:
         form = ContactForm()
     return render(request, 'address_book/create_contact.html', {'form': form})
@@ -37,7 +37,7 @@ def edit_contact(request, contact_id):
         form = ContactForm(request.POST, instance=contact)
         if form.is_valid():
             form.save()
-            return redirect('address_book:contact_list')
+            return redirect('address_book:index_address_book')
     else:
         form = ContactForm(instance=contact)
     return render(request, 'address_book/edit_contact.html', {'form': form, 'contact': contact})
@@ -55,7 +55,8 @@ def contact_detail(request, contact_id):
     contact = get_object_or_404(Contact, pk=contact_id, user=request.user)
     data = {
         'id': contact.id,
-        'name': contact.name,
+        'first_name': contact.first_name,
+        'last_name': contact.last_name,
         'email': contact.email,
         'phone': contact.phone,
         'address': contact.address,

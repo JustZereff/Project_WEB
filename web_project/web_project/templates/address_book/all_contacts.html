@@ -5,7 +5,7 @@
   <h2>Всі контакти</h2>
   <ul>
     {% for contact in contacts %}
-      <li>{{ contact.name }} - {{ contact.phone }} - {{ contact.email }}</li>
+      <li>{{ contact.first_name }} {{ contact.last_name }} - {{ contact.phone }} - {{ contact.email }}</li>
     {% endfor %}
   </ul>
 {% endblock %}

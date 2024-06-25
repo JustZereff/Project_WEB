@@ -2,6 +2,9 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from cloudinary.models import CloudinaryField
+from django.contrib.auth import get_user_model
+import os
+
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -44,16 +47,17 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 class Contact(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='contacts')
-    name = models.CharField(_('name'), max_length=100)
+    first_name = models.CharField(_('first_name'), max_length=100, null=True)
+    last_name = models.CharField(_('last_name'), max_length=100, null=True)
     email = models.EmailField(_('email address'), blank=True, null=True)
     phone = models.CharField(_('phone number'), max_length=15, blank=True, null=True)
-    address = models.TextField(_('address'), blank=True, null=True)
+    address = models.CharField(_('address'), max_length=150, blank=True, null=True)
     birth_date = models.DateField(_('birth date'), blank=True, null=True)  # Новое поле
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     updated_at = models.DateTimeField(_('updated at'), auto_now=True)
 
     def __str__(self):
-        return f'{self.name} ({self.user.email})'
+        return f'{self.first_name} {self.last_name} ({self.user.email})'
     
     def days_until_birthday(self):
         from datetime import date
@@ -88,13 +92,37 @@ class Note(models.Model):
         tags = [Tag.objects.get_or_create(name=name)[0] for name in tag_names]
         self.tags.set(tags)
 
+User = get_user_model()
 
-# class File(models.Model):
-#     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='files')
-#     name = models.CharField(_('file name'), max_length=255)
-#     file = CloudinaryField(_('file'))
-#     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
-#     updated_at = models.DateTimeField(_('updated at'), auto_now=True)
+class File(models.Model):
+    CATEGORY_CHOICES = [
+        ('image', 'Зображення'),
+        ('document', 'Документи'),
+        ('video', 'Відео'),
+        ('other', 'Інше'),
+    ]
 
-#     def __str__(self):
-#         return f'{self.name} ({self.user.email})'
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='files')
+    name = models.CharField(max_length=255, verbose_name="Назва")
+    file = models.FileField(upload_to='uploads/', verbose_name="Файл")
+    category = models.CharField(max_length=10, choices=CATEGORY_CHOICES, default='other', verbose_name="Категорія")
+    uploaded_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата завантаження")
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.category or self.category == 'other':
+            self.category = self._determine_category()
+        super().save(*args, **kwargs)
+
+    def _determine_category(self):
+        extension = os.path.splitext(self.file.name)[1].lower()
+        if extension in ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff']:
+            return 'image'
+        elif extension in ['.pdf', '.doc', '.docx', '.txt', '.odt', '.rtf']:
+            return 'document'
+        elif extension in ['.mp4', '.avi', '.mov', '.mkv', '.flv', '.wmv']:
+            return 'video'
+        else:
+            return 'other'

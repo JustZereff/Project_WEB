@@ -8,7 +8,7 @@ class CustomUserAdmin(admin.ModelAdmin):
 
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'phone', 'user', 'created_at')
+    list_display = ('first_name', 'last_name', 'email', 'phone', 'user', 'created_at')
     search_fields = ('name', 'email', 'phone', 'user__email')
 
 @admin.register(Note)

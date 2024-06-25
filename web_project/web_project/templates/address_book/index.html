@@ -6,6 +6,8 @@
 {% endblock %}
 
 {% block content %}
+    <br>
+    <br>
     <div class="container mt-5">
         <h1>Адресна книга</h1>
 
@@ -16,8 +18,8 @@
 
         <ul class="list-group">
             {% for contact in page_obj %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <a href="#" class="contact-details" data-contact-id="{{ contact.id }}">{{ contact.name }}</a>
+                <li class="list-group-item d-flex justify-content-between align-items-center custom-list-group-item">
+                    <a href="#" class="contact-details" data-contact-id="{{ contact.id }}">{{ contact.first_name }} {{ contact.last_name }}</a>
                     <span class="badge bg-secondary">{{ contact.phone }}</span>
                     <a href="{% url 'address_book:edit_contact' contact.id %}" class="btn btn-sm btn-outline-secondary ms-2">Редагувати</a>
                 </li>
@@ -61,7 +63,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрити"></button>
                 </div>
                 <div class="modal-body">
-                    <p><strong>Ім'я:</strong> <span id="contactName"></span></p>
+                    <p><strong>Ім'я:</strong> <span id="contactFirst_name"></span></p>
+                    <p><strong>Прізвище:</strong> <span id="contactLast_name"></span></p>
                     <p><strong>Email:</strong> <span id="contactEmail"></span></p>
                     <p><strong>Телефон:</strong> <span id="contactPhone"></span></p>
                     <p><strong>Адреса:</strong> <span id="contactAddress"></span></p>
@@ -78,7 +81,8 @@
         document.addEventListener('DOMContentLoaded', function () {
             const contactDetailsLinks = document.querySelectorAll('.contact-details');
             const modalTitle = document.getElementById('contactDetailsModalLabel');
-            const contactName = document.getElementById('contactName');
+            const contactFirst_name = document.getElementById('contactFirst_name');
+            const contactLast_name = document.getElementById('contactLast_name');
             const contactEmail = document.getElementById('contactEmail');
             const contactPhone = document.getElementById('contactPhone');
             const contactAddress = document.getElementById('contactAddress');
@@ -96,8 +100,9 @@
                             return response.json();
                         })
                         .then(data => {
-                            modalTitle.textContent = `Деталі контакту "${data.name}"`;
-                            contactName.textContent = data.name;
+                            modalTitle.textContent = `Деталі контакту "${data.first_name}"`;
+                            contactFirst_name.textContent = data.first_name;
+                            contactLast_name.textContent = data.last_name;
                             contactEmail.textContent = data.email ? data.email : '-';
                             contactPhone.textContent = data.phone ? data.phone : '-';
                             contactAddress.textContent = data.address ? data.address : '-';
