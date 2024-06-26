@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block content %}
+<br>
     <div class="container mt-5">
         <h1>Адресна книга</h1>
 
@@ -16,10 +17,10 @@
         </div>
 
         <!-- Форма для поиска контакта -->
-        <form method="get" class="mb-3 position-relative">
+        <form method="get" class="mb-3 position-relative" action="{% url 'address_book:index_address_book' %}">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Пошук контакта" name="q" value="{{ request.GET.q }}" id="search-input">
-                <button class="btn btn-outline-secondary" type="submit">Найти</button>
+                <button class="btn btn-outline-secondary custom-notes-title" type="submit">Найти</button>
             </div>
             <ul class="dropdown-menu position-absolute w-100" id="search-results" style="display: none;"></ul>
         </form>
@@ -36,7 +37,7 @@
             {% endfor %}
         </ul>
 
-        <nav aria-label="Страницы">
+        <nav aria-label="Сторінки">
             <ul class="pagination justify-content-center mt-4">
                 {% if page_obj.has_previous %}
                     <li class="page-item">

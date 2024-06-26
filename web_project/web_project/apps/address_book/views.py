@@ -9,12 +9,28 @@ from django.db.models import Q
 
 @login_required
 def index_address_book(request):
-    contacts = Contact.objects.filter(user=request.user).order_by('id')  # Добавлено упорядочение
-    paginator = Paginator(contacts, 15)
+    query = request.GET.get('q', '').strip()
+    if query:
+        if ' ' in query:
+            first_name, last_name = query.split(' ', 1)
+            contacts = Contact.objects.filter(
+                Q(first_name__icontains=first_name) & Q(last_name__icontains=last_name),
+                user=request.user
+            ).order_by('id')
+        else:
+            contacts = Contact.objects.filter(
+                Q(first_name__icontains=query) | Q(last_name__icontains=query),
+                user=request.user
+            ).order_by('id')
+    else:
+        contacts = Contact.objects.filter(user=request.user).order_by('id')
+    
+    paginator = Paginator(contacts, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     form = ContactForm()
     return render(request, 'address_book/index.html', {'form': form, 'page_obj': page_obj})
+
 
 @login_required
 def create_contact(request):
@@ -88,10 +104,20 @@ def upcoming_birthdays(request):
 
 @login_required
 def search_contacts(request):
-    query = request.GET.get('q', '')
-    contacts = Contact.objects.filter(
-        Q(first_name__icontains=query) | Q(last_name__icontains=query), 
-        user=request.user
-    )[:10]
+    query = request.GET.get('q', '').strip()
+    print(f"Search query: {query}")
+    if ' ' in query:
+        first_name, last_name = query.split(' ', 1)
+        print(f"First name: {first_name}, Last name: {last_name}")
+        contacts = Contact.objects.filter(
+            Q(first_name__icontains=first_name) & Q(last_name__icontains=last_name),
+            user=request.user
+        )[:10]
+    else:
+        contacts = Contact.objects.filter(
+            Q(first_name__icontains=query) | Q(last_name__icontains=query),
+            user=request.user
+        )[:10]
     results = [{'id': contact.id, 'name': f"{contact.first_name} {contact.last_name}"} for contact in contacts]
+    print(f"Results: {results}")
     return JsonResponse(results, safe=False)
