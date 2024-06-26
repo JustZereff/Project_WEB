@@ -10,5 +10,7 @@ urlpatterns = [
     path('<int:contact_id>/', views.contact_detail, name='contact_detail'),
     path('list/', views.contact_list, name='contact_list'),
     path('upcoming-birthdays/', views.upcoming_birthdays, name='upcoming_birthdays'),
+    path('search/', views.search_contacts, name='search_contacts'),
     path('<int:contact_id>/delete/', views.delete_contact, name='delete_contact'),
+
 ]

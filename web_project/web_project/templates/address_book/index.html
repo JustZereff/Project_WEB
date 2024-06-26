@@ -6,15 +6,24 @@
 {% endblock %}
 
 {% block content %}
-    <br>
-    <br>
+<br>
     <div class="container mt-5">
         <h1>Адресна книга</h1>
 
+        <!-- Форма для создания нового контакта -->
         <div class="text-end mb-3">
-            <a href="{% url 'address_book:create_contact' %}" class="btn btn-primary">Створити контакт</a>
+            <a href="{% url 'address_book:create_contact' %}" class="btn btn-primary">Создать контакт</a>
             <a href="{% url 'address_book:upcoming_birthdays' %}" class="btn btn-secondary">Ближайшие дни рождения</a>
         </div>
+
+        <!-- Форма для поиска контакта -->
+        <form method="get" class="mb-3 position-relative" action="{% url 'address_book:index_address_book' %}">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Пошук контакта" name="q" value="{{ request.GET.q }}" id="search-input">
+                <button class="btn btn-outline-secondary custom-notes-title" type="submit">Найти</button>
+            </div>
+            <ul class="dropdown-menu position-absolute w-100" id="search-results" style="display: none;"></ul>
+        </form>
 
         <ul class="list-group">
             {% for contact in page_obj %}
@@ -31,7 +40,7 @@
             {% endfor %}
         </ul>
 
-        <nav aria-label="Страницы">
+        <nav aria-label="Сторінки">
             <ul class="pagination justify-content-center mt-4">
                 {% if page_obj.has_previous %}
                     <li class="page-item">
@@ -58,6 +67,7 @@
         </nav>
     </div>
 
+    <!-- Модальное окно для отображения деталей контакта -->
     <div class="modal fade" id="contactDetailsModal" tabindex="-1" aria-labelledby="contactDetailsModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -66,8 +76,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрити"></button>
                 </div>
                 <div class="modal-body">
-                    <p><strong>Ім'я:</strong> <span id="contactFirst_name"></span></p>
-                    <p><strong>Прізвище:</strong> <span id="contactLast_name"></span></p>
+                    <p><strong>Ім'я:</strong> <span id="contactFirstName"></span></p>
+                    <p><strong>Прізвище:</strong> <span id="contactLastName"></span></p>
                     <p><strong>Email:</strong> <span id="contactEmail"></span></p>
                     <p><strong>Телефон:</strong> <span id="contactPhone"></span></p>
                     <p><strong>Адреса:</strong> <span id="contactAddress"></span></p>
@@ -82,40 +92,94 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const contactDetailsLinks = document.querySelectorAll('.contact-details');
+            const searchInput = document.getElementById('search-input');
+            const searchResults = document.getElementById('search-results');
             const modalTitle = document.getElementById('contactDetailsModalLabel');
-            const contactFirst_name = document.getElementById('contactFirst_name');
-            const contactLast_name = document.getElementById('contactLast_name');
+            const contactFirstName = document.getElementById('contactFirstName');
+            const contactLastName = document.getElementById('contactLastName');
             const contactEmail = document.getElementById('contactEmail');
             const contactPhone = document.getElementById('contactPhone');
             const contactAddress = document.getElementById('contactAddress');
             const contactBirthDate = document.getElementById('contactBirthDate');
 
+            searchInput.addEventListener('input', function () {
+                const query = this.value.trim();
+                if (query.length > 0) {
+                    fetch(`/address_book/search/?q=${query}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            searchResults.innerHTML = '';
+                            data.forEach(contact => {
+                                const li = document.createElement('li');
+                                li.classList.add('dropdown-item');
+                                li.textContent = contact.name;
+                                li.style.cursor = 'pointer';
+                                li.addEventListener('click', function () {
+                                    fetch(`/address_book/${contact.id}/`)
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            modalTitle.textContent = `Деталі контакту "${data.first_name} ${data.last_name}"`;
+                                            contactFirstName.textContent = data.first_name || '-';
+                                            contactLastName.textContent = data.last_name || '-';
+                                            contactEmail.textContent = data.email || '-';
+                                            contactPhone.textContent = data.phone || '-';
+                                            contactAddress.textContent = data.address || '-';
+                                            contactBirthDate.textContent = data.birth_date || '-';
+                                            const contactDetailsModal = new bootstrap.Modal(document.getElementById('contactDetailsModal'));
+                                            contactDetailsModal.show();
+                                        });
+                                });
+                                searchResults.appendChild(li);
+                            });
+                            searchResults.style.display = 'block';
+                        });
+                } else {
+                    searchResults.innerHTML = '';
+                    searchResults.style.display = 'none';
+                }
+            });
+
+            // Обработчик для кликов по ссылкам контактов в основном списке
+            const contactDetailsLinks = document.querySelectorAll('.contact-details');
             contactDetailsLinks.forEach(link => {
                 link.addEventListener('click', function (event) {
                     event.preventDefault();
                     const contactId = this.getAttribute('data-contact-id');
                     fetch(`/address_book/${contactId}/`)
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok');
-                            }
-                            return response.json();
-                        })
+                        .then(response => response.json())
                         .then(data => {
-                            modalTitle.textContent = `Деталі контакту "${data.first_name}"`;
-                            contactFirst_name.textContent = data.first_name;
-                            contactLast_name.textContent = data.last_name;
-                            contactEmail.textContent = data.email ? data.email : '-';
-                            contactPhone.textContent = data.phone ? data.phone : '-';
-                            contactAddress.textContent = data.address ? data.address : '-';
-                            contactBirthDate.textContent = data.birth_date ? data.birth_date : '-';
+                            modalTitle.textContent = `Деталі контакту "${data.first_name} ${data.last_name}"`;
+                            contactFirstName.textContent = data.first_name || '-';
+                            contactLastName.textContent = data.last_name || '-';
+                            contactEmail.textContent = data.email || '-';
+                            contactPhone.textContent = data.phone || '-';
+                            contactAddress.textContent = data.address || '-';
+                            contactBirthDate.textContent = data.birth_date || '-';
                             const contactDetailsModal = new bootstrap.Modal(document.getElementById('contactDetailsModal'));
                             contactDetailsModal.show();
-                        })
-                        .catch(error => console.error('Error:', error));
+                        });
                 });
             });
         });
     </script>
+
+    <style>
+        #search-results {
+            background-color: #f8f9fa; /* Фон выпадающего списка */
+            border: 3px solid #dee2e6; /* Толщина рамки */
+            border-radius: 0.25rem;
+            margin-top: 0.5rem; /* Смещение ниже поля ввода */
+            color: #495057; /* Цвет текста */
+            position: absolute;
+            z-index: 1000;
+            left: 10%; /* Смещение правее */
+        }
+        #search-results .dropdown-item {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+        }
+        #search-results .dropdown-item:hover {
+            background-color: #e9ecef; /* Цвет при наведении */
+        }
+    </style>
 {% endblock %}
