@@ -85,3 +85,13 @@ def upcoming_birthdays(request):
     )
     
     return render(request, 'address_book/upcoming_birthdays.html', {'contacts': contacts})
+
+@login_required
+def search_contacts(request):
+    query = request.GET.get('q', '')
+    contacts = Contact.objects.filter(
+        Q(first_name__icontains=query) | Q(last_name__icontains=query), 
+        user=request.user
+    )[:10]
+    results = [{'id': contact.id, 'name': f"{contact.first_name} {contact.last_name}"} for contact in contacts]
+    return JsonResponse(results, safe=False)
