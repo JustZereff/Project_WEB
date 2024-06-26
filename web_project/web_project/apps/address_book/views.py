@@ -85,3 +85,12 @@ def upcoming_birthdays(request):
     )
     
     return render(request, 'address_book/upcoming_birthdays.html', {'contacts': contacts})
+
+
+@login_required
+def delete_contact(request, contact_id):
+    contact = get_object_or_404(Contact, pk=contact_id, user=request.user)
+    if request.method == 'POST':
+        contact.delete()
+        return redirect('address_book:index_address_book')
+    return render(request, 'address_book/contact_confirm_delete.html', {'contact': contact})
