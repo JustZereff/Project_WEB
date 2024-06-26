@@ -121,3 +121,11 @@ def search_contacts(request):
     results = [{'id': contact.id, 'name': f"{contact.first_name} {contact.last_name}"} for contact in contacts]
     print(f"Results: {results}")
     return JsonResponse(results, safe=False)
+
+@login_required
+def delete_contact(request, contact_id):
+    contact = get_object_or_404(Contact, pk=contact_id, user=request.user)
+    if request.method == 'POST':
+        contact.delete()
+        return redirect('address_book:index_address_book')
+    return render(request, 'address_book/contact_confirm_delete.html', {'contact': contact})
