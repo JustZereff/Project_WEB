@@ -159,6 +159,9 @@ charset-normalizer==3.3.2 ; python_version >= "3.12" and python_version < "4.0" 
     --hash=sha256:ff8fa367d09b717b2a17a052544193ad76cd49979c805768879cb63d9ca50561
 cloudinary==1.40.0 ; python_version >= "3.12" and python_version < "4.0" \
     --hash=sha256:fe1a5309734814b481de637ab3041e8699995387df965ec0f2d8f767db7067a2
+dj-database-url==2.2.0 ; python_version >= "3.12" and python_version < "4.0" \
+    --hash=sha256:3e792567b0aa9a4884860af05fe2aa4968071ad351e033b6db632f97ac6db9de \
+    --hash=sha256:9f9b05058ddf888f1e6f840048b8d705ff9395e3b52a07165daa3d8b9360551b
 django-cloudinary-storage==0.3.0 ; python_version >= "3.12" and python_version < "4.0" \
     --hash=sha256:95c855c7334141b2a485ea7eb5716de87bb6ce0d848e205debb3a3ab7bbbd49a \
     --hash=sha256:debd403a5f225c9d35c4af508ff4abc7fdc262129464134b60b2feeb2c44d3e1

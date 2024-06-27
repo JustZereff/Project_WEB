@@ -20,6 +20,7 @@ webdriver-manager = "^4.0.1"
 beautifulsoup4 = "^4.12.3"
 gunicorn = "^22.0.0"
 whitenoise = "^6.7.0"
+dj-database-url = "^2.2.0"
 
 
 
