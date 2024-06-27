@@ -15,7 +15,7 @@ from .tasks import parse_and_save_news
 from .forms import CustomUserCreationForm, CustomAuthenticationForm, UserEditForm, CustomPasswordChangeForm
 
 def index(request):
-    # parse_and_save_news()
+    parse_and_save_news()
     
         # Определение пути для сохранения JSON файла
     script_dir = os.path.dirname(__file__)
