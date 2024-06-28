@@ -9,12 +9,25 @@ from django.db.models import Q
 
 @login_required
 def index_address_book(request):
-    contacts = Contact.objects.filter(user=request.user).order_by('id')  # Добавлено упорядочение
-    paginator = Paginator(contacts, 15)
+    contacts = Contact.objects.filter(user=request.user).order_by('last_name')
+    paginator = Paginator(contacts, 10)  # количество контактов на странице
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+
+    index = page_obj.number - 1  # индекс текущей страницы
+    max_index = len(paginator.page_range)  # общее количество страниц
+
+    start_index = index - 4 if index - 4 >= 0 else 0
+    end_index = index + 5 if index + 5 < max_index else max_index
+
+    page_range = paginator.page_range[start_index:end_index]
+
     form = ContactForm()
-    return render(request, 'address_book/index.html', {'form': form, 'page_obj': page_obj})
+    return render(request, 'address_book/index.html', {
+        'form': form,
+        'page_obj': page_obj,
+        'page_range': page_range
+    })
 
 @login_required
 def create_contact(request):
