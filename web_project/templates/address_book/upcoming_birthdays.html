@@ -1,20 +1,21 @@
 {% extends "base.html" %}
 
 {% block title %}
-    Ближайшие дни рождения
+    Найближчі дні народження
 {% endblock %}
 
 {% block content %}
     <br>
     <div class="container mt-5">
-        <h1>Ближайшие дни рождения</h1>
+        <h1>Найближчі дні народження</h1>
+        <br>
         <ul class="list-group">
             {% for contact in contacts %}
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     {{ contact.first_name }} {{ contact.last_name }} - {{ contact.birth_date }}
                 </li>
             {% empty %}
-                <li class="list-group-item">Нет контактов с ближайшими днями рождения</li>
+                <li class="list-group-item">Немає контактів із найближчими днями народження</li>
             {% endfor %}
         </ul>
     </div>

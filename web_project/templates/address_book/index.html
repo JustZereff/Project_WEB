@@ -13,7 +13,7 @@
         <!-- Форма для создания нового контакта -->
         <div class="text-end mb-3">
             <a href="{% url 'address_book:create_contact' %}" class="btn btn-primary">Создать контакт</a>
-            <a href="{% url 'address_book:upcoming_birthdays' %}" class="btn btn-secondary">Ближайшие дни рождения</a>
+            <a href="{% url 'address_book:upcoming_birthdays' %}" class="btn btn-secondary">Найближчі дні народження</a>
         </div>
 
         <!-- Форма для поиска контакта -->
@@ -40,14 +40,17 @@
             {% endfor %}
         </ul>
 
-        <nav aria-label="Сторінки">
+        <nav aria-label="Страницы">
             <ul class="pagination justify-content-center mt-4">
                 {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1">&laquo; Перша</a>
+                    </li>
                     <li class="page-item">
                         <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Попередня</a>
                     </li>
                 {% endif %}
-                {% for num in page_obj.paginator.page_range %}
+                {% for num in page_range %}
                     {% if page_obj.number == num %}
                         <li class="page-item active" aria-current="page">
                             <span class="page-link">{{ num }}</span>
@@ -61,6 +64,9 @@
                 {% if page_obj.has_next %}
                     <li class="page-item">
                         <a class="page-link" href="?page={{ page_obj.next_page_number }}">Наступна</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Остання &raquo;</a>
                     </li>
                 {% endif %}
             </ul>
