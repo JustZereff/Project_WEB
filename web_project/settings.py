@@ -14,10 +14,10 @@ from pathlib import Path
 import os, sys
 import environ
 import logging
+from celery.schedules import crontab
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +26,6 @@ sys.path.insert(0, os.path.join(PROJECT_ROOT, 'apps'))
 
 env = environ.Env()
 environ.Env.read_env(BASE_DIR / '.env')
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -37,12 +36,9 @@ SECRET_KEY = 'django-insecure-*7p4q@*g!az^bv3iop6lh&@&u5cdyv46o8dr0ums#e83wz7815
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = []
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,[::1]").split(",")
 
-
 # Application definition
-
 INSTALLED_APPS = [
     'index',
     'address_book',
@@ -56,7 +52,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
-
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.getenv('CLOUD_NAME'),
@@ -82,9 +77,7 @@ ROOT_URLCONF = 'web_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            os.path.join(PROJECT_ROOT, 'templates')
-            ],
+        'DIRS': [os.path.join(PROJECT_ROOT, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -99,28 +92,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'web_project.wsgi.application'
 
-
 # Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': env('DATABASE_NAME'),
-#         'USER': env('DATABASE_USER'),
-#         'PASSWORD': env('DATABASE_PASSWORD'),
-#         'HOST': env('DATABASE_HOST'),
-#         'PORT': env('DATABASE_PORT'),
-#     }
-# }
-
 DATABASES = {
     'default': dj_database_url.config(
         default=os.getenv('DATABASE_URL')
@@ -134,59 +106,30 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # Password validation
-# https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
-
-
-
 
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/custom_login/'
 
 # Internationalization
-# https://docs.djangoproject.com/en/5.0/topics/i18n/
-
-LANGUAGE_CODE = 'uk-UA'  # Встановлюємо українську мову
+LANGUAGE_CODE = 'uk-UA'
 USE_I18N = True
 USE_L10N = True
-
 TIME_ZONE = 'UTC'
-
-USE_I18N = True
-
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
-
-# STATIC_URL = 'static/'
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [
-    os.path.join(PROJECT_ROOT, 'static'),  # Добавляем путь к папке static
-]
+STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, 'static')]
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
-# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email
@@ -200,3 +143,18 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 logger.info(f"Email settings: host={EMAIL_HOST}, port={EMAIL_PORT}, user={EMAIL_HOST_USER}")
+
+# Celery
+CELERY_BROKER_URL = os.getenv('REDIS_URL')
+CELERY_RESULT_BACKEND = os.getenv('REDIS_URL')
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
+
+CELERY_BEAT_SCHEDULE = {
+    'parse_and_save_news_twice_a_day': {
+        'task': 'apps.index.tasks.parse_and_save_news',
+        'schedule': crontab(hour='8,20', minute=0),  # Выполняется в 8:00 и 20:00
+    },
+}
