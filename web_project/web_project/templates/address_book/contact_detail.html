@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Contact Details - {{ contact.first_name }}
+{% endblock %}
+
+{% block content %}
+    <h1 class="mt-5">Contact Details</h1>
+    <p><strong>Ім'я:</strong> {{ contact.first_name }}</p>
+    <p><strong>Прізвище:</strong> {{ contact.last_name }}</p>
+    <p><strong>Email:</strong> {{ contact.email }}</p>
+    <p><strong>Phone:</strong> {{ contact.phone }}</p>
+    <p><strong>Address:</strong> {{ contact.address }}</p>
+    <p><strong>Birth Date:</strong> {{ contact.birth_date }}</p>
+    <a href="{% url 'update_contact' contact.pk %}" class="btn btn-warning">Edit</a>
+    <a href="{% url 'delete_contact' contact.pk %}" class="btn btn-danger">Delete</a>
+    <a href="{% url 'index_address_book' %}" class="btn btn-secondary">Back to Contacts</a>
+{% endblock %}

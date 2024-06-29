@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% load form_tags %}
+
+{% block title %}Створення контакту{% endblock %}
+
+{% block content %}
+<br><br>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6 bg-light p-4 rounded shadow-sm">
+            <h2 class="mb-4">Створення нового контакту</h2>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group mb-3">
+                    {{ form.first_name.label_tag }}
+                    {{ form.first_name|add_class:"form-control" }}
+                    {% if form.first_name.errors %}
+                        <div class="invalid-feedback d-block">
+                            {% for error in form.first_name.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group mb-3">
+                    {{ form.last_name.label_tag }}
+                    {{ form.last_name|add_class:"form-control" }}
+                    {% if form.last_name.errors %}
+                        <div class="invalid-feedback d-block">
+                            {% for error in form.last_name.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group mb-3">
+                    {{ form.email.label_tag }}
+                    {{ form.email|add_class:"form-control" }}
+                    {% if form.email.errors %}
+                        <div class="invalid-feedback d-block">
+                            {% for error in form.email.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group mb-3">
+                    {{ form.phone.label_tag }}
+                    {{ form.phone|add_class:"form-control" }}
+                    {% if form.phone.errors %}
+                        <div class="invalid-feedback d-block">
+                            {% for error in form.phone.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group mb-3">
+                    {{ form.address.label_tag }}
+                    {{ form.address|add_class:"form-control" }}
+                    {% if form.address.errors %}
+                        <div class="invalid-feedback d-block">
+                            {% for error in form.address.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group mb-4">
+                    {{ form.birth_date.label_tag }}
+                    {{ form.birth_date|add_class:"form-control" }}
+                    {% if form.birth_date.errors %}
+                        <div class="invalid-feedback d-block">
+                            {% for error in form.birth_date.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Зберегти</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

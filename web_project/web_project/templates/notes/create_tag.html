@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Створення тега
+{% endblock %}
+
+{% block content %}
+<br><br>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6 bg-light p-4 rounded shadow-sm">
+            <h2 class="mb-4">Створення тега</h2>
+            <form method="POST" action="{% url 'create_tag' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Зберегти</button>
+            </form>
+            {% if form.errors %}
+                <div class="alert alert-danger mt-3">
+                    <ul>
+                    {% for field, errors in form.errors.items %}
+                        <li>{{ field }}: {{ errors|striptags }}</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
