@@ -14,7 +14,6 @@ from pathlib import Path
 import os, sys
 import environ
 import logging
-from celery.schedules import crontab
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -144,18 +143,3 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 logger.info(f"Email settings: host={EMAIL_HOST}, port={EMAIL_PORT}, user={EMAIL_HOST_USER}")
 
-# Celery
-CELERY_BROKER_URL = os.getenv('REDIS_URL')
-CELERY_RESULT_BACKEND = os.getenv('REDIS_URL')
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'UTC'
-
-CELERY_BEAT_SCHEDULE = {
-    'parse_and_save_news_twice_a_day': {
-        'task': 'apps.index.tasks.parse_and_save_news',
-        # 'schedule': crontab(hour='8,20', minute=0),  # Выполняется в 8:00 и 20:00
-        'schedule': crontab(minute='*/5'),  # Каждые 30 минут
-    },
-}
