@@ -155,6 +155,7 @@ CELERY_TIMEZONE = 'UTC'
 CELERY_BEAT_SCHEDULE = {
     'parse_and_save_news_twice_a_day': {
         'task': 'apps.index.tasks.parse_and_save_news',
-        'schedule': crontab(hour='8,20', minute=0),  # Выполняется в 8:00 и 20:00
+        # 'schedule': crontab(hour='8,20', minute=0),  # Выполняется в 8:00 и 20:00
+        'schedule': crontab(minute='*/5'),  # Каждые 30 минут
     },
 }
