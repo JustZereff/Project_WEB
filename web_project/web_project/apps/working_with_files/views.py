@@ -2,7 +2,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from .models import File
+from index.models import File
 from .forms import FileForm
 from cloudinary.uploader import destroy
 from django.contrib.auth.decorators import login_required

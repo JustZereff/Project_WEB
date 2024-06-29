@@ -1,11 +1,35 @@
-{% extends "base.html" %} 
+{% extends "base.html" %}
 
 {% load static %}
 
 {% block title %}
-    Web Project 
+    Головна сторінка
 {% endblock %}
 
 {% block content %}
-
+    <div class="container mt-5">
+        <br>
+        <img class="mb-4"><img src="/static/images/news.png" width="150"></h1>
+        <br><br>
+        <div class="list-group">
+            {% for item in news %}
+                <div class="list-group-item list-group-item-action flex-column align-items-start custom-list-group-item">
+                    <div class="d-flex w-100 justify-content-between custom-title">
+                        <h5 class="mb-1">
+                            <a href="https://bank.gov.ua{{ item.url }}" target="_blank">{{ item.title }}</a>
+                        </h5>
+                    </div>
+                    <div class="mt-2">
+                        <small class="custom-time">{{ item.timestamp }}</small>
+                        {% if item.tags %}
+                            <span class="badge badge-primary custom-tags">{{ item.tags.0 }}</span>
+                            {% for tag in item.tags|slice:"1:" %}
+                                <span class="badge badge-secondary custom-tags">{{ tag }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

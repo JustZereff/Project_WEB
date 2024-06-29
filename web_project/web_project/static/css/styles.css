@@ -47,108 +47,93 @@ body {
     padding: 20px !important; /* добавляем немного отступа для визуального разделения элементов */
 }
 
-.btn-secondary {
-    background-color: rgba(108, 117, 125, 0.8) !important; /* Змінюємо колір кнопки */
-    color: #fff;
-    border: none;
+.custom-list-group-item {
+    background-color: rgba(66, 66, 66, 0.3); /* Серый цвет с прозрачностью */
+    border: none; /* Удаление рамки */
+    margin-bottom: 10px; /* Отступ между блоками */
+    transition: background-color 0.3s; /* Плавный переход цвета */
+    border-radius: 5px; /* Закругленные углы */
 }
 
-.btn-secondary:hover {
-    background-color: rgba(108, 117, 125, 1) !important; /* Змінюємо колір кнопки при наведенні */
-    color: #ddd;
-    transform: scale(1.05); /* Додаємо ефект збільшення */
+.custom-list-group-item:hover {
+    background-color: rgba(66, 66, 66, 0.5); /* Немного темнее при наведении */
 }
 
-.form-container {
-    background-color: rgba(255, 255, 255, 0.8); /* Додаємо невелику прозорість */
-    padding: 20px;
+.custom-list-group-item a {
+    color: rgba(255, 255, 255, 0.7); /* Цвет ссылки */
+    text-decoration: none; /* Удаление подчеркивания */
+}
+
+.custom-list-group-item a:hover {
+    text-decoration: underline; /* Подчеркивание при наведении */
+}
+
+.custom-list-group-item small,
+.custom-list-group-item .badge {
+    color: rgba(255, 255, 255, 0.6); /* Цвет времени и тегов */
+}
+
+.custom-card {
+    background-color: rgba(66, 66, 66, 0.3);
+    border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Додаємо тінь навколо форми */
-    max-width: 500px;
-    margin: auto;
-    margin-top: 100px; /* Збільшуємо верхній відступ */
+    transition: box-shadow 0.3s ease;
 }
 
-.form-group {
-    margin-bottom: 15px;
+.custom-card:hover {
+    box-shadow: 0 0 10px rgba(66, 66, 66, 0.5);
 }
 
-.custom-file-input {
-    cursor: pointer;
+.custom-notes-title{
+    color: rgba(255, 255, 255, 0.95) !important; /* Цвет текста */
+    text-decoration: none; /* Удаление подчеркивания */
 }
 
-.custom-select {
-    cursor: pointer;
+.custom-notes-title:hover{
+    text-decoration: underline; /* Подчеркивание при наведении */
 }
 
-.form-container h2 {
-    text-align: center;
+.custom-notes-text{
+    color: rgba(255, 255, 255, 0.8); /* Цвет текста */
+}
+
+.tags {
+    color: rgba(255, 255, 255, 0.6); /* Цвет тегов */
+    margin-top: 8px;
+}
+
+.custom_tag{
+    font-size: small;
+    color: rgba(255, 255, 255, 0.7); /* Цвет ссылки */
+    text-decoration: none; /* Удаление подчеркивания */
+}
+
+.custom_tag:hover{
+    text-decoration: underline; /* Подчеркивание при наведении */
+}
+
+.pagination {
+    margin-top: 20px;
+}
+
+.pagination .page-link {
     color: #333;
-    margin-bottom: 20px;
 }
 
-.btn-custom {
+.pagination .page-link:hover {
+    color: #007bff;
+}
+
+.pagination .page-item.active .page-link {
     background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    display: block;
-    width: 100%;
+    border-color: #007bff;
 }
 
-.btn-custom:hover {
-    background-color: #0056b3;
+.pagination .page-link:focus {
+    box-shadow: none;
 }
 
-/* Покращення для мобільних пристроїв */
-@media (max-width: 600px) {
-    .form-container {
-        margin-top: 20px;
-        padding: 10px;
-    }
-}
-
-.custom-header {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #2c3e50;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.custom-header .fas {
-    font-size: 1.5rem;
-    color: #2980b9;
-}
-
-.file-info {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.file-actions {
-    display: flex;
-    gap: 10px;
-}
-
-.file-name {
-    font-weight: bold;
-}
-
-.file-details {
-    color: #6c757d;
-}
-
-.btn-info {
-    background-color: rgb(6, 88, 91);
-    color: white;
-}
-
-.btn-info:hover {
-    background-color: rgb(4, 77, 18);
-    color: white;
+.new-note-link {
+    text-align: right;
+    margin-bottom: 10px;
 }
