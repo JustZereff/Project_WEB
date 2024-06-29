@@ -53,3 +53,6 @@ def parse_and_save_news():
 
     # Сохраняем текущее время как дату последнего изменения файла
     os.utime(json_path, times=(current_time, current_time))
+
+if __name__ == "__main__":
+    parse_and_save_news()

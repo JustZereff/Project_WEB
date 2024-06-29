@@ -1,5 +1,61 @@
 [
     {
+        "title": "Рада МВФ завершила четвертий перегляд програми розширеного фінансування та затвердила виділення траншу обсягом 2,2 млрд дол. США",
+        "url": "/ua/news/all/rada-mvf-zavershila-chetvertiy-pereglyad-programi-rozshirenogo-finansuvannya-ta-zatverdila-vidilennya-transhu-obsyagom-22-mlrd-dol-ssha",
+        "timestamp": "28 черв. 2024 23:30",
+        "tags": [
+            "міжнародна співпраця"
+        ]
+    },
+    {
+        "title": "Подання банками анкет власників істотної участі, керівників і ключових осіб з огляду на запровадження нових ознак небездоганної ділової репутації відкладено до 4 листопада 2024 року",
+        "url": "/ua/news/all/podannya-bankami-anket-vlasnikiv-istotnoyi-uchasti-kerivnikiv-i-klyuchovih-osib-z-oglyadu-na-zaprovadjennya-novih-oznak-nebezdogannoyi-dilovoyi-reputatsiyi-vidkladeno-do-4-listopada-2024-roku",
+        "timestamp": "28 черв. 2024 18:16",
+        "tags": [
+            "банки"
+        ]
+    },
+    {
+        "title": "Актуалізовано окремі вимоги до учасників ринку небанківських фінансових послуг у відповідь на їх звернення",
+        "url": "/ua/news/all/aktualizovano-okremi-vimogi-do-uchasnikiv-rinku-nebankivskih-finansovih-poslug-u-vidpovid-na-yih-zvernennya",
+        "timestamp": "28 черв. 2024 17:36",
+        "tags": [
+            "небанківські установи",
+            "регулювання небанківських фінансових послуг"
+        ]
+    },
+    {
+        "title": "Національний банк оновлює системи гарантованого електроживлення",
+        "url": "/ua/news/all/natsionalniy-bank-onovlyuye-sistemi-garantovanogo-elektrojivlennya",
+        "timestamp": "28 черв. 2024 16:00",
+        "tags": [
+            "про НБУ",
+            "міжнародна співпраця"
+        ]
+    },
+    {
+        "title": "Національний банк відкликав банківську ліцензію в АКЦІОНЕРНОГО ТОВАРИСТВА “АЛЬПАРІ БАНК” на підставі поданого ним клопотання",
+        "url": "/ua/news/all/natsionalniy-bank-vidklikav-bankivsku-litsenziyu-v-aktsionernogo-tovaristva-alpari-bank-na-pidstavi-podanogo-nim-klopotannya",
+        "timestamp": "27 черв. 2024 19:59",
+        "tags": [
+            "банки"
+        ]
+    },
+    {
+        "title": "На ринку небанківських фінансових послуг з’явився новий гравець",
+        "url": "/ua/news/all/na-rinku-nebankivskih-finansovih-poslug-zyavivsya-noviy-gravets-18934",
+        "timestamp": "27 черв. 2024 13:07",
+        "tags": [
+            "небанківські установи"
+        ]
+    },
+    {
+        "title": "Колонка Андрія Пишного \"Куди рухається фінансова система України?\"",
+        "url": "/ua/news/all/kolonka-andriya-pishnogo-kudi-ruhayetsya-finansova-sistema-ukrayini",
+        "timestamp": "27 черв. 2024 12:55",
+        "tags": []
+    },
+    {
         "title": "Трьом небанківським фінансовим установам анульовано ліцензії та виключено їх з реєстру, семи – змінено обсяг ліцензій на діяльність фінансової компанії",
         "url": "/ua/news/all/trom-nebankivskim-finansovim-ustanovam-anulovano-litsenziyi-ta-viklyucheno-yih-z-reyestru-semi--zmineno-obsyag-litsenziy-na-diyalnist-finansovoyi-kompaniyi",
         "timestamp": "26 черв. 2024 17:35",
@@ -147,61 +203,6 @@
         "title": "Страховику розширено обсяг ліцензії",
         "url": "/ua/news/all/strahoviku-rozshireno-obsyag-litsenziyi",
         "timestamp": "18 черв. 2024 19:20",
-        "tags": [
-            "небанківські установи"
-        ]
-    },
-    {
-        "title": "Новий Закон про \"автоцивілку\" сприятиме розвитку ринку та захисту прав споживачів",
-        "url": "/ua/news/all/noviy-zakon-pro-avtotsivilku-spriyatime-rozvitku-rinku-ta-zahistu-prav-spojivachiv",
-        "timestamp": "18 черв. 2024 18:42",
-        "tags": [
-            "небанківські установи"
-        ]
-    },
-    {
-        "title": "Інтерв'ю Сергія Ніколайчука для Obserwator Finansowy про стійкість фінансової системи, макроекономічні показники та VIIІ Щорічну дослідницьку конференцію",
-        "url": "/ua/news/all/intervyu-sergiya-nikolaychuka-dlya-obserwator-finansowy-pro-stiykist-finansovoyi-sistemi-makroekonomichni-pokazniki-ta-viii-schorichnu-doslidnitsku-konferentsiyu",
-        "timestamp": "18 черв. 2024 16:14",
-        "tags": []
-    },
-    {
-        "title": "Три страховики розпочали вихід з ринку шляхом виконання страхового портфеля",
-        "url": "/ua/news/all/tri-strahoviki-rozpochali-vihid-z-rinku-shlyahom-vikonannya-strahovogo-portfelya",
-        "timestamp": "18 черв. 2024 13:50",
-        "tags": [
-            "небанківські установи"
-        ]
-    },
-    {
-        "title": "Двом небанківським установам анульовано ліцензії",
-        "url": "/ua/news/all/dvom-nebankivskim-ustanovam-anulovano-litsenziyi",
-        "timestamp": "18 черв. 2024 12:52",
-        "tags": [
-            "небанківські установи"
-        ]
-    },
-    {
-        "title": "Національний банк України анулював ліцензії двом кредитним спілкам та виключив їх із реєстру фінансових установ",
-        "url": "/ua/news/all/natsionalniy-bank-ukrayini-anulyuvav-litsenziyi-dvom-kreditnim-spilkam-ta-viklyuchiv-yih-iz-reyestru-finansovih-ustanov",
-        "timestamp": "18 черв. 2024 11:51",
-        "tags": [
-            "небанківські установи"
-        ]
-    },
-    {
-        "title": "До трьох фінансових компаній застосовано заходи впливу за порушення вимог щодо етичної поведінки",
-        "url": "/ua/news/all/do-troh-finansovih-kompaniy-zastosovano-zahodi-vplivu-za-porushennya-vimog-schodo-etichnoyi-povedinki",
-        "timestamp": "17 черв. 2024 15:30",
-        "tags": [
-            "права споживачів",
-            "небанківські установи"
-        ]
-    },
-    {
-        "title": "Чотирьом небанківським фінансовим установам анульовано ліцензії, п’яти – змінено обсяг ліцензій на діяльність фінансової компанії",
-        "url": "/ua/news/all/chotirom-nebankivskim-finansovim-ustanovam-anulovano-litsenziyi-pyati--zmineno-obsyag-litsenziy-na-diyalnist-finansovoyi-kompaniyi",
-        "timestamp": "17 черв. 2024 14:54",
         "tags": [
             "небанківські установи"
         ]
