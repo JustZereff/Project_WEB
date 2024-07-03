@@ -67,7 +67,7 @@ def file_delete(request, pk):
             file_url = file.file.url
             public_id = '/'.join(file.file.name.split('/')[-2:])
             public_id = public_id.replace('.' + file_url.split('.')[-1], '')
-            destroy(file.public_id)
+            destroy(public_id)
             file.delete()
         except Exception as e:
             print(f"Error deleting file {file.name}: {str(e)}")
