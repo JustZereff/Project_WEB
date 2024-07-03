@@ -1,10 +1,11 @@
+# views.py
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from index.models import File
 from .forms import FileForm
-from cloudinary.uploader import destroy
+from cloudinary.uploader import upload, destroy
 from django.contrib.auth.decorators import login_required
 
 @login_required
@@ -36,6 +37,13 @@ def file_upload(request):
     if request.method == 'POST':
         form = FileForm(request.POST, request.FILES, user=request.user)
         if form.is_valid():
+            file = request.FILES['file']
+            file_type = file.content_type.split('/')[0]
+            resource_type = 'auto'  # Cloudinary автоматически определит тип файла
+            
+            upload_response = upload(file, resource_type=resource_type)
+            form.instance.url = upload_response['url']
+            form.instance.public_id = upload_response['public_id']
             form.save()
             return redirect('index_files')
     else:
@@ -48,17 +56,10 @@ def file_delete(request, pk):
     
     if request.method == 'POST':
         try:
-            # Видалити файл з Cloudinary
-            file_url = file.file.url
-            public_id = '/'.join(file.file.name.split('/')[-2:])
-            public_id = public_id.replace('.' + file_url.split('.')[-1], '')
-            destroy(public_id)
-           
-            # Видалити файл з бази даних
+            destroy(file.public_id)
             file.delete()
         except Exception as e:
             print(f"Error deleting file {file.name}: {str(e)}")
-
         return HttpResponseRedirect(reverse('index_files'))
 
     return render(request, 'working_with_files/confirm_delete.html', {'file': file})
